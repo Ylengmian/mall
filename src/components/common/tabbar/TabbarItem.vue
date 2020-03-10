@@ -48,6 +48,6 @@ export default {
    width: 24px;
  }
  .active{
-     color: red
+     color: #ff6699;
  }
 </style>
