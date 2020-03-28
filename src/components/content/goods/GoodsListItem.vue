@@ -1,7 +1,7 @@
 <template>
-    <div class="goods-item">
+    <div class="goods-item" @click="goodsItemClick">
         <!-- @load="imageLoad" 监听图片是否加载完成 -->
-        <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+        <img :src="showImage" alt="" @load="imageLoad">
         <div class="goods-info">
             <p>{{goodsItem.title}}</p>
             <span class="price">{{goodsItem.price}}</span>
@@ -21,9 +21,17 @@
             }
         }
     },
+    computed: {
+      showImage(){
+          return this.goodsItem.image||this.goodsItem.show.img; //先取前面的再去后面的
+      }  
+    },
     methods: {
         imageLoad() {
            this.$bus.$emit("itemImageLoad")
+        },
+        goodsItemClick(){
+            this.$router.push('./detail/'+this.goodsItem.iid)
         }
     }
     }

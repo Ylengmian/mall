@@ -6,6 +6,7 @@ const Home = () =>import('../views/home/Home')
 const Classify = () =>import('../views/classify/Classify')
 const One = () =>import('../views/one/One')
 const ShopC = () =>import('../views/shopc/ShopC')
+const Detail = () => import('../views/detail/Detail')
 // const Classify = () =>import('../views/classify/Classify')
 // const ShopC = () =>import('../views/shopc/ShopC')
 // const One = () =>import('../views/one/One')
@@ -35,6 +36,11 @@ const routes =[
 	{
 		path:'/one',
 		component:One
+	},
+	{
+		// :id  绑定动态路由
+		path:'/detail/:iid',
+		component:Detail
 	}
 ]
 
