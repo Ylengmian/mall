@@ -41,6 +41,7 @@
 
         display: flex;
         text-align: center;
+        margin-top: 10px;
         /* position: fixed;
         left: 0;
         right: 0;

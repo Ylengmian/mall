@@ -5,6 +5,7 @@
                        :titles="['流行','新款','精选']"
                        @tabClick="tabClick" 
                        class="tab-control" v-show="isTabFixed"/>
+        <!-- Scroll一定得有固定的额高度 -->
         <Scroll class="content" 
                 ref="scroll"
                 :probe-type="3"

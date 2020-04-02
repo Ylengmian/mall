@@ -1,9 +1,6 @@
 <template>
     <div id="detail" >
       <DetailNavBar class="detail-nav" @titleClick="titleClick" ref="nav"/>
-      <ul>
-        <li v-for="item in $store.state.cartList">{{item}}</li>
-      </ul>
       <Scroll class="content" ref="scroll" :probe-type="3" @scroll="contScroll">
            <DetailSwiper :top-images="topImages"/>
            <DetailBaseInfo :goods = "goods"/>
@@ -15,6 +12,7 @@
       </Scroll>
       <DetailBottomBar @addCart ="addToCart"/>
       <BackTop @click.native="backClick" v-show="isShowBackTop"/>
+      <!-- <Toast :message="message" :show="show"></Toast> -->
     </div>
 </template>
 <script>
@@ -29,10 +27,13 @@
     
     import Scroll from 'components/common/scroll/Scroll'
     import GoodsList from 'components/content/goods/GoodsList'
+    import Toast from 'components/common/toast/Toast'
 
     import {getDetail,Goods,Shop,GoodsParam,getRecommend} from 'network/detail'
     import {debounce} from "common/tools";
     import  {itemListenerMixin,backTopMixin} from "common/mixin";
+
+    import {mapActions} from 'vuex'
 
     export default {
     name:'Detail',
@@ -47,6 +48,7 @@
       DetailBottomBar,
       GoodsList,
       Scroll,
+      // Toast
     },
     //混入技术
     mixins: [itemListenerMixin,backTopMixin],
@@ -65,6 +67,8 @@
             getThemeTopY:null,
             currentIndex:0,
             isShowBackTop: false,
+            // message:'',
+            // show:false
         }
     },
     created () {
@@ -112,6 +116,7 @@
         },100)
     },
     methods: {
+      ...mapActions(['addCart']),
         imageLoad(){
             this.$refs.scroll.refresh();
 
@@ -146,7 +151,21 @@
 
           //2.将商品添加到购物车里面
           // this.$store.commit('addCart',product)
-          this.$store.dispatch('addCart',product)
+          //方式1：通过映射关系
+          this.addCart(product).then(res =>{
+            // this.show =true;
+            // this.message = "res";
+            // setTimeout(() =>{
+            //   this.show = false;
+            //   this.message = " ";
+            // },1500)
+            // 3.添加到购物车成功提示（toast）
+            this.$toast.show(res ,1500)
+          })
+          //方式2：通过dispatch方式
+          // this.$store.dispatch('addCart',product).then(res =>{
+          //   console.log(res)
+          // })
         }
     },
     mounted () {
